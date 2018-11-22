@@ -1,1 +1,6 @@
 node_modules
+*.log
+*.gif
+*.jpeg
+*.png
+*.jpg
