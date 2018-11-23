@@ -1,7 +1,7 @@
 const User = require('../model/user.js').User
 const Article = require('../model/article.js')
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs')
+// const path = require('path')
 
 exports.getHome = async(ctx) => {
   // console.log(ctx) console.log(ctx.query)
