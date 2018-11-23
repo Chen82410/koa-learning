@@ -1,7 +1,5 @@
 const User = require('../model/user.js').User
 const Article = require('../model/article.js')
-// const fs = require('fs')
-// const path = require('path')
 
 exports.getHome = async(ctx) => {
   // console.log(ctx) console.log(ctx.query)
@@ -27,16 +25,6 @@ exports.getHome = async(ctx) => {
 }
 
 exports.getPersonalMsg = async(ctx) => {
-  // let files = await fs.readdirSync(path.join(__dirname, '../public/avatars/'))
-  // let account = ctx.query.account
-  // let baseUrl = 'http://localhost:3002/'
-  // for (let item of files) {
-  //   if (item.indexOf(account) != -1) {
-  //     console.log(item)
-  //     result.avatar = baseUrl + item
-  //     console.log(result)
-  //   }
-  // }
   let result = await User.findOne({account: ctx.query.account})
   if (result) {
     ctx.body = ctx.query.callback + `(${JSON.stringify(result)})`
