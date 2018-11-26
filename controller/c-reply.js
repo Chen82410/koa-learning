@@ -32,3 +32,16 @@ exports.postReply = async(ctx) => {
     }
   }
 }
+
+// 获取帖子详情
+exports.getInvitationDetail = async(ctx) => {
+  let result = await Article.findById(ctx.query.content_id)
+  if (result) {
+    ctx.body = ctx.query.callback + `(${JSON.stringify(result)})`
+  } else {
+    ctx.body = {
+      retcode: 0,
+      errMsg: '查询失败!'
+    }
+  }
+}

@@ -1,6 +1,7 @@
 const User = require('../model/user.js').User
 const Article = require('../model/article.js')
 
+// 首页帖子
 exports.getHome = async(ctx) => {
   // console.log(ctx) console.log(ctx.query)
   let query = ctx.query
@@ -24,6 +25,7 @@ exports.getHome = async(ctx) => {
   ctx.body = ctx.query.callback + `(${JSON.stringify(result)})`
 }
 
+// 个人信息
 exports.getPersonalMsg = async(ctx) => {
   let result = await User.findOne({account: ctx.query.account})
   if (result) {

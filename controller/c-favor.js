@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Article = require('../model/article.js')
 
+// 点赞
 exports.getFavor = async(ctx) => {
 
   const query = ctx.query
@@ -12,7 +13,7 @@ exports.getFavor = async(ctx) => {
   if (parseInt(query.favor_type)) { //点赞
     await Article.findByIdAndUpdate(content_id, {
       $push: {
-        praiser: ctx.query.account
+        praiser: query.account
       },
       $inc: {
         favor_cnt: 1
@@ -28,7 +29,7 @@ exports.getFavor = async(ctx) => {
   } else { //取消点赞
     await Article.findByIdAndUpdate(content_id, {
       $pull: {
-        praiser: ctx.query.account
+        praiser: query.account
       },
       $inc: {
         favor_cnt: -1
