@@ -15,6 +15,7 @@ const ArticleSchema = new Schema({
     type: Number,
     default: 0
   },
+  author_id: String,
   author: [UserSchema],
   is_my_favor: Number,
   replies: [
@@ -28,7 +29,7 @@ const ArticleSchema = new Schema({
     }
   ],
   praiser: Array
-})
+}, {versionKey: false})
 
 const Article = mongoose.model('articles', ArticleSchema)
 
