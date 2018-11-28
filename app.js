@@ -22,17 +22,17 @@ app.use(koaBody({
   textLimit:"5mb"
 }))
 
-app.use(async(ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  log4js.resLogger(ctx, ms)
-})
+// app.use(async(ctx, next) => {
+//   const start = new Date()
+//   await next()
+//   const ms = new Date() - start
+//   log4js.resLogger(ctx, ms)
+// })
 
-app.on('error', (err, ctx) => {
-  log4js.errLogger(ctx, err)
-  console.error('server error', err, ctx)
-})
+// app.on('error', (err, ctx) => {
+//   log4js.errLogger(ctx, err)
+//   console.error('server error', err, ctx)
+// })
 
 const koaOptions = {
   origin: true,

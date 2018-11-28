@@ -20,6 +20,7 @@ const ArticleSchema = new Schema({
   is_my_favor: Number,
   replies: [
     {
+      replier_id: String,
       reply_from: [UserSchema],
       reply_time: {
         type: Date,
