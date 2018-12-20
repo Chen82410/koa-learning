@@ -1,11 +1,10 @@
 const fs = require('fs')
 const User = require('../model/user.js').User
-const Article = require('../model/article.js')
 const path = require('path')
 const config = require('../config/config.js')
 
 exports.postPersonalData = async (ctx) => {
-  
+  // console.log(ctx)
   if (ctx.url === '/personal_data/avatar') {//头像
     const name = path.join(__dirname, '../public/avatars/')+ctx.request.body.account+'.'+ctx.request.body.image_type
     let dataBuffer = new Buffer(ctx.request.body.avatar, 'base64')
@@ -13,7 +12,7 @@ exports.postPersonalData = async (ctx) => {
     await fs.writeFileSync(name, dataBuffer, function (err) {
       if (err) {
         error = err
-      } 
+      }
     })
     if (error) {
       ctx.body = {
@@ -31,7 +30,6 @@ exports.postPersonalData = async (ctx) => {
       }
     }
   } else if (ctx.url === '/personal_data/personal_msg') {//基本信息
-    // console.log(ctx.request.body)
     let result = await User.findOneAndUpdate({account: ctx.request.body.account}, JSON.parse(ctx.request.body.personal_msg))
     if (result) {
       ctx.body = {

@@ -9,11 +9,11 @@ exports.postContent = async(ctx) => {
   content_msg.article_msg.create_time = moment(Date.now()).format('YYYY-MM-DD HH:mm')
 
   let user = await User.findOne({account: ctx.request.body.author_account}, {password: 0})
-  console.log(user)
+  // console.log(user)
   if (user) {
     content_msg.author_id = user._id
     let result = await Article.create(content_msg)
-    console.log(result)
+    // console.log(result)
     if (result) {
       ctx.body = {
         retcode: 1,
