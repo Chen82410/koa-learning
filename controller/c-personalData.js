@@ -5,7 +5,7 @@ const config = require('../config/config.js')
 
 exports.postPersonalData = async (ctx) => {
   // console.log(ctx)
-  if (ctx.url === '/personal_data/avatar') {//头像
+  if (ctx.url === '/personal_data/avatar') {//提交头像
     const name = path.join(__dirname, '../public/avatars/')+ctx.request.body.account+'.'+ctx.request.body.image_type
     let dataBuffer = new Buffer(ctx.request.body.avatar, 'base64')
     let error = ''
@@ -29,7 +29,7 @@ exports.postPersonalData = async (ctx) => {
         }
       }
     }
-  } else if (ctx.url === '/personal_data/personal_msg') {//基本信息
+  } else if (ctx.url === '/personal_data/personal_msg') {//提交基本信息
     let result = await User.findOneAndUpdate({account: ctx.request.body.account}, JSON.parse(ctx.request.body.personal_msg))
     if (result) {
       ctx.body = {

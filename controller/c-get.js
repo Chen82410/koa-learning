@@ -14,7 +14,7 @@ exports.getHome = async(ctx) => {
 
   result.data = await Article.find().skip((pageNum - 1) * dataCount).limit(dataCount).sort({"_id": -1})
   for (let item of result.data) {
-    if (item.praiser && item.praiser.indexOf(ctx.query.account) > -1) {
+    if (item.praiser && item.praiser.includes(ctx.query.account)) {
       item.is_my_favor = 1
     } else {
       item.is_my_favor = 0

@@ -9,40 +9,24 @@ exports.getFavor = async(ctx) => {
     .Types
     .ObjectId(query.content_id)
   let result = {}
-
-  if (parseInt(query.favor_type)) { //点赞
-    await Article.findByIdAndUpdate(content_id, {
-      $push: {
-        praiser: query.account
-      },
-      $inc: {
-        favor_cnt: 1
-      },
-      $set: {
-        is_my_favor: query.favor_type
-      }
-    })
-    result = {
-      retcode: 1,
-      errMsg: '点赞成功!'
-    }
-  } else { //取消点赞
-    await Article.findByIdAndUpdate(content_id, {
-      $pull: {
-        praiser: query.account
-      },
-      $inc: {
-        favor_cnt: -1
-      },
-      $set: {
-        is_my_favor: query.favor_type
-      }
-    })
-    result = {
-      retcode: 1,
-      errMsg: '取消点赞成功!'
+  let favor_type = parseInt(query.favor_type)  
+  let obj = {    
+    $inc: {
+      favor_cnt: favor_type ? favor_type : (favor_type-1)
+    },
+    $set: {
+      is_my_favor: favor_type
     }
   }
+  if (favor_type) {
+    obj.$push = {praiser: query.account}
+  } else {
+    obj.$pull = {praiser: query.account}
+  }  
+  await Article.findByIdAndUpdate(content_id, obj)
+  result = {
+    retcode: 1,
+    errMsg: favor_type ? '点赞成功!' : '取消点赞成功!'
+  }
   ctx.body = await query.callback + `(${JSON.stringify(result)})`
-
 }
