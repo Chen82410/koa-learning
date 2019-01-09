@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Article = require('../model/article.js')
 
 // 点赞
-exports.getFavor = async(ctx) => {
+exports.getFavor = async(ctx, next) => {
 
   const query = ctx.query
   const content_id = mongoose
@@ -28,5 +28,7 @@ exports.getFavor = async(ctx) => {
     retcode: 1,
     errMsg: favor_type ? '点赞成功!' : '取消点赞成功!'
   }
-  ctx.body = await query.callback + `(${JSON.stringify(result)})`
+  // ctx.body = await query.callback + `(${JSON.stringify(result)})`
+  ctx.body = await result
+  await next()
 }

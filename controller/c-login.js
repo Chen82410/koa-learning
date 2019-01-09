@@ -1,7 +1,7 @@
 const md5 = require('md5')
 const User = require('../model/user.js').User
 
-exports.postLogin = async(ctx) => {
+exports.postLogin = async(ctx, next) => {
 
   let result = await User.findOne({account: ctx.request.body.account})
   console.log(result)
@@ -23,4 +23,5 @@ exports.postLogin = async(ctx) => {
       }
     }
   }
+  await next()
 }

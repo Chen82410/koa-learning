@@ -3,7 +3,7 @@ const User = require('../model/user.js').User
 const path = require('path')
 const config = require('../config/config.js')
 
-exports.postPersonalData = async (ctx) => {
+exports.postPersonalData = async (ctx, next) => {
   // console.log(ctx)
   if (ctx.url === '/personal_data/avatar') {//提交头像
     const name = path.join(__dirname, '../public/avatars/')+ctx.request.body.account+'.'+ctx.request.body.image_type
@@ -43,4 +43,5 @@ exports.postPersonalData = async (ctx) => {
       }
     }
   }
+  await next()
 }

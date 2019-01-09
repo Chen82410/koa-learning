@@ -43,6 +43,38 @@ const koaOptions = {
 app.use(cors(koaOptions))
 // app.use(bodyParser())
 
+const allowPage = ['/register', '/login', '.gif', '.jpeg', '.jpg', '.png','.ico']
+
+app.use(async(ctx,next) => {
+  // console.log(ctx.url)
+  let url = ctx.url.split('?')[0]
+  
+  let static = url.endsWith('.gif') || url.endsWith('.jpeg') || url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.ico')
+
+  console.log(static)
+  // if (!allowPage.includes(url) && !ctx.header.authorization) {
+  //   console.log('hahahaha')
+  //   ctx.body = {
+  //     errcode: 3,
+  //     errMsg: '用户未登录'
+  //   }
+  //   return
+  // }
+  // pageFilter(ctx)
+  if (allowPage.includes(url) || static) {
+    // console.log(url)
+  } else {
+    if (!ctx.header.authorization) {
+      ctx.body = {
+        errcode: 3,
+        errMsg: '用户未登录'
+      }
+      return
+    }
+  } 
+  await next() 
+})
+
 app
   .use(require('./routers/register.js').routes())
   .use(require('./routers/register.js').allowedMethods())

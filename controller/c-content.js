@@ -2,7 +2,7 @@ const User = require('../model/user.js').User
 const Article = require('../model/article.js')
 const moment = require('moment')
 
-exports.postContent = async(ctx) => {
+exports.postContent = async(ctx, next) => {
   console.log(ctx.request.body)
   let content_msg = {}
   content_msg.article_msg = JSON.parse(ctx.request.body.article_msg)
@@ -31,4 +31,5 @@ exports.postContent = async(ctx) => {
       errMsg: '发送失败!请稍后重试!'
     }
   }
+  await next()
 }

@@ -3,8 +3,8 @@ const moment = require('moment')
 const User = require('../model/user.js').User
 const Article = require('../model/article.js')
 
-exports.postReply = async(ctx) => {
-
+exports.postReply = async(ctx, next) => {
+  console.log(ctx.request.body)
   const body = ctx.request.body
   const content_id = mongoose.Types.ObjectId(body.content_id)
   let tempObj = {
@@ -15,7 +15,6 @@ exports.postReply = async(ctx) => {
   }
   
   let result = await User.findOne({account: body.reply_from}, {password: 0})
-  // tempObj.reply_from[0] = await User.findById(result._id, {password: 0})
   let now = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
   tempObj.replier_id = result._id
   tempObj.reply_time = now
@@ -34,24 +33,25 @@ exports.postReply = async(ctx) => {
       errMsg: "回复失败!"
     }
   }
+  await next()
 }
 
 // 获取帖子详情
-exports.getInvitationDetail = async(ctx) => {
+exports.getInvitationDetail = async(ctx, next) => {
   console.log(ctx.query)
-  let result = await Article.findById(ctx.query.content_id)
-  // console.log(result)
-  result.author[0] = await User.findById(result.author_id, {password: 0})
-  // console.log(result)
+  let result = await Article.findById(ctx.query.content_id)  
+  result.author[0] = await User.findById(result.author_id, {password: 0})  
   for (let item of result.replies) {
     item.reply_from[0] = await User.findById(item.replier_id, {password: 0})
   }
   if (result) {
-    ctx.body = ctx.query.callback + `(${JSON.stringify(result)})`
+    // ctx.body = ctx.query.callback + `(${JSON.stringify(result)})`
+    ctx.body = await result
   } else {
     ctx.body = {
       retcode: 0,
       errMsg: '查询失败!'
     }
   }
+  await next()
 }
