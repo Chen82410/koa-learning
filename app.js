@@ -43,7 +43,7 @@ const koaOptions = {
 app.use(cors(koaOptions))
 // app.use(bodyParser())
 
-const allowPage = ['/register', '/login', '.gif', '.jpeg', '.jpg', '.png','.ico']
+const allowPage = ['/register', '/login']
 
 app.use(async(ctx,next) => {
   // console.log(ctx.url)
@@ -52,17 +52,8 @@ app.use(async(ctx,next) => {
   let static = url.endsWith('.gif') || url.endsWith('.jpeg') || url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.ico')
 
   console.log(static)
-  // if (!allowPage.includes(url) && !ctx.header.authorization) {
-  //   console.log('hahahaha')
-  //   ctx.body = {
-  //     errcode: 3,
-  //     errMsg: '用户未登录'
-  //   }
-  //   return
-  // }
-  // pageFilter(ctx)
   if (allowPage.includes(url) || static) {
-    // console.log(url)
+    
   } else {
     if (!ctx.header.authorization) {
       ctx.body = {
