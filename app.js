@@ -51,9 +51,9 @@ app.use(async(ctx,next) => {
   
   let static = url.endsWith('.gif') || url.endsWith('.jpeg') || url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.ico')
 
-  console.log(static)
+  // console.log(static)
   if (allowPage.includes(url) || static) {
-    
+
   } else {
     if (!ctx.header.authorization) {
       ctx.body = {

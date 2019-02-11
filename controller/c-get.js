@@ -17,7 +17,7 @@ exports.getHome = async(ctx, next) => {
   let dataCount = Number(query.data_count)
   let result = {}
   
-  let totalCount = await Article.count() 
+  let totalCount = await Article.count()
   if (totalCount) result.totalCount = totalCount
 
   result.data = await Article.find().skip((pageNum - 1) * dataCount).limit(dataCount).sort({"_id": -1})
